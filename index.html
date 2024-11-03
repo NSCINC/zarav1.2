@@ -5,95 +5,84 @@
     <link rel="icon" href="logo.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encoder Zara - Fire Data Engine</title>
-    <style>
-        /* Estilo base */
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a, #333333);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            padding: 30px;
-            background: #2e2e2e;
-            border-radius: 10px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-            text-align: center;
-        }
-        .logo img {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        h1 {
-            color: #00ffae;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        label {
-            color: #00ffae;
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        textarea, input[type="file"] {
-            width: 100%;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border: 1px solid #00ffae;
-            padding: 10px;
-            margin: 10px 0;
-            font-family: monospace;
-            border-radius: 4px;
-            resize: vertical;
-        }
-        h2 {
-            color: #00ffae;
-            font-size: 1.2rem;
-            margin: 20px 0 10px;
-        }
-        .button {
-            width: 100%;
-            padding: 12px;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-            font-weight: bold;
-        }
-        .button.primary {
-            background-color: #1DB954;
-        }
-        .button.primary:hover {
-            background-color: #1ed760;
-        }
-        .button.secondary {
-            background-color: #FF5722;
-        }
-        .button.secondary:hover {
-            background-color: #e64a19;
-        }
-        .button.key-feature {
-            background-color: #4CAF50; /* Cor verde para Key Features */
-        }
-        .button.key-feature:hover {
-            background-color: #45a049; /* Tom mais escuro de verde ao passar o mouse */
-        }
-        .footer {
-            margin-top: 20px;
-            color: #00ffae;
-            font-size: 0.8rem;
-        }
+   <style>
+    /* Estilo base */
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1a1a1a, #333333);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        width: 100%;
+        max-width: 600px;
+        padding: 30px;
+        background: #2e2e2e;
+        border-radius: 10px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+        text-align: center;
+    }
+    .logo img {
+        max-width: 150px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    h1 {
+        color: #00ffae;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    label {
+        color: #00ffae;
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    textarea, input[type="file"] {
+        width: 100%;
+        background-color: #1a1a1a;
+        color: #ffffff;
+        border: 1px solid #00ffae;
+        padding: 10px;
+        margin: 10px 0;
+        font-family: monospace;
+        border-radius: 4px;
+        resize: vertical;
+    }
+    h2 {
+        color: #00ffae;
+        font-size: 1.2rem;
+        margin: 20px 0 10px;
+    }
+    .button {
+        width: 100%;
+        padding: 12px;
+        color: #00ffae; /* Texto verde */
+        border: 2px solid #00ffae; /* Borda verde */
+        background-color: white; /* Fundo branco */
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        margin-top: 10px;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+    }
+    .button:hover {
+        background-color: #00ffae; /* Fundo verde ao passar o mouse */
+        color: white; /* Texto branco ao passar o mouse */
+    }
+    .footer {
+        margin-top: 20px;
+        color: #00ffae;
+        font-size: 0.8rem;
+    }
+</style>
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
