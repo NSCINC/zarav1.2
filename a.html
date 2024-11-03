@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder Zara - Fire Data Engine</title>
+    <style>
+        /* Fundo com gradiente */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #333333);
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+            background: #2e2e2e; /* Fundo mais escuro */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            color: #00ffae; /* Verde similar ao texto "FIRE DATA ENGINE" */
+        }
+        textarea, input[type="file"] {
+            width: 100%;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #00ffae;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            border-radius: 4px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #1DB954; /* Verde estilo Spotify */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #1ed760;
+        }
+        .output {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            border: 1px solid #00ffae;
+        }
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Logotipo Zara -->
+        <div class="logo">
+            <img src="/zara.png" alt="Logo Zara">
+        </div>
+        
+        <!-- Entrada de Dados Integrados -->
+        <label for="combinedInput">Dados e Parâmetros (insira os dados brutos, parâmetros e consulta SQL):</label>
+        <textarea id="combinedInput" placeholder="Exemplo:\nDados Brutos:\n...\nParâmetros: remover_nulos, normalizar\nConsulta SQL: SELECT * FROM tabela;"></textarea>
+
+        <!-- Upload de Arquivo SQL -->
+        <h2>Upload de Arquivo SQL</h2>
+        <input type="file" id="sqlFile" accept=".sql" onchange="loadSQLFile()">
+        
+        <!-- Botão para Processar Dados -->
+        <button class="button" onclick="processData()">Processar Dados</button>
+
+        <!-- Exibição dos Dados Estruturados -->
+        <h2>Dados Estruturados para LLM:</h2>
+        <div class="output" id="structuredData">Os dados estruturados aparecerão aqui...</div>
+
+        <!-- Botão para Transcrever para Swift -->
+        <button class="button" onclick="transcribeToSwift()">Transcrever para Swift</button>
+
+        <!-- Exibição do Código Swift -->
+        <h2>Dados Transcritos para Swift:</h2>
+        <div class="output" id="swiftData">O código Swift aparecerá aqui...</div>
+    </div>
+
+    <script>
+        function loadSQLFile() {
+            const fileInput = document.getElementById("sqlFile");
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("combinedInput").value += `\nConsulta SQL:\n${e.target.result}`;
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        function processData() {
+            const combinedInput = document.getElementById("combinedInput").value;
+            
+            // Extraindo dados, parâmetros e consulta SQL do bloco único
+            let structuredData = combinedInput;
+            
+            // Processamento simulado com base nos parâmetros
+            if (combinedInput.includes("remover_nulos")) {
+                structuredData = structuredData.replace(/\bnull\b/g, '');
+            }
+            if (combinedInput.includes("normalizar")) {
+                structuredData = structuredData.toLowerCase();
+            }
+            if (combinedInput.includes("filtrar_duplicatas")) {
+                structuredData = Array.from(new Set(structuredData.split('\n'))).join('\n');
+            }
+
+            // Exibir dados processados
+            document.getElementById("structuredData").textContent = structuredData;
+        }
+
+        function transcribeToSwift() {
+            const structuredData = document.getElementById("structuredData").textContent;
+
+            // Transcrição para Swift (simulação)
+            let swiftData = `let processedData = """\n${structuredData}\n"""\n`;
+            swiftData += `// Processamento concluído para uso em Swift\n`;
+
+            document.getElementById("swiftData").textContent = swiftData;
+        }
+    </script>
+</body>
+</html>
