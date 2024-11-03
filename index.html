@@ -16,7 +16,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
             width: 100%;
@@ -80,7 +80,7 @@
             <img src="/zara.png" alt="Logo Zara">
         </div>
         <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="3" placeholder="Insira dados e parâmetros aqui..."></textarea>
+        <textarea id="combinedInput" rows="5" placeholder="Insira dados e parâmetros aqui..."></textarea>
         
         <h2>Upload de Arquivo</h2>
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
@@ -118,10 +118,7 @@
             const combinedInput = document.getElementById("combinedInput").value;
             let structuredData = combinedInput;
 
-            // Processamento adicional de dados
-            // ...
-
-            // Transcrição para Python e SQL
+            // Processamento de dados - pode ser expandido para incluir lógicas adicionais
             const pythonData = transcribeToPython(structuredData);
             const sqlData = transcribeToSQL(structuredData);
 
@@ -149,17 +146,17 @@
                 cancelButtonText: 'Planilha',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    downloadFile(window.pythonData, 'dados_processados.py');
+                    downloadFile(window.pythonData, 'dados_processados.py', 'text/plain');
                 } else if (result.isDenied) {
-                    downloadFile(window.sqlData, 'dados_processados.sql');
+                    downloadFile(window.sqlData, 'dados_processados.sql', 'text/plain');
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    downloadFile(window.excelData, 'dados_processados.xlsx');
+                    downloadFile(window.excelData, 'dados_processados.txt', 'text/plain');
                 }
             });
         }
 
-        function downloadFile(data, filename) {
-            const blob = new Blob([data], { type: 'text/plain' });
+        function downloadFile(data, filename, type) {
+            const blob = new Blob([data], { type });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
