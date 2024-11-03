@@ -56,7 +56,6 @@
         .button {
             width: 100%;
             padding: 12px;
-            background-color: #1DB954;
             color: white;
             border: none;
             border-radius: 5px;
@@ -65,14 +64,22 @@
             margin-top: 10px;
             transition: background-color 0.3s;
         }
-        .button:hover {
+        .button.primary {
+            background-color: #1DB954; /* Botão verde */
+        }
+        .button.primary:hover {
             background-color: #1ed760;
         }
-        .features-link {
+        .button.secondary {
+            background-color: #FF5722; /* Botão laranja */
+        }
+        .button.secondary:hover {
+            background-color: #e64a19;
+        }
+        .copyright {
             margin-top: 20px;
             color: #00ffae;
-            text-decoration: none;
-            display: inline-block;
+            font-size: 0.8rem;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
@@ -90,10 +97,13 @@
         <h2>Upload de Arquivo</h2>
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
         
-        <button class="button" onclick="processData()">Processar Dados</button>
-        <button class="button" onclick="showDownloadOptions()">Download</button>
+        <button class="button primary" onclick="processData()">Processar Dados</button>
+        <button class="button primary" onclick="showDownloadOptions()">Download</button>
+        <button class="button secondary" onclick="showKeyFeatures()">Key Features</button>
         
-        <a class="features-link" href="features.html">Ver Principais Recursos</a>
+        <div class="copyright">
+            &copy; 2024 Encoder Zara. Todos os direitos reservados.
+        </div>
     </div>
 
     <script>
@@ -190,6 +200,10 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        function showKeyFeatures() {
+            Swal.fire("Key Features", "Aqui estão as principais características do Encoder Zara.", "info");
         }
     </script>
 </body>
