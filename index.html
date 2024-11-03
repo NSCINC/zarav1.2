@@ -19,7 +19,7 @@
         }
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 400px; /* Largura reduzida para simplificação */
             padding: 30px;
             background: #2e2e2e;
             border-radius: 10px;
@@ -31,16 +31,9 @@
             height: auto;
             margin-bottom: 20px;
         }
-        label {
-            font-size: 1rem;
-            color: #00ffae;
-            margin-bottom: 5px;
-            display: block;
-            text-align: left;
-        }
         h2 {
             color: #00ffae;
-            font-size: 1.2rem;
+            font-size: 1.5rem; /* Aumentado para destaque */
             margin: 20px 0 10px;
         }
         .button {
@@ -53,11 +46,9 @@
             font-size: 1em;
             margin-top: 10px;
             transition: background-color 0.3s;
+            background-color: #1DB954; /* Cor do botão verde */
         }
-        .button.primary {
-            background-color: #1DB954; /* Botão verde */
-        }
-        .button.primary:hover {
+        .button:hover {
             background-color: #1ed760;
         }
         .copyright {
@@ -73,8 +64,8 @@
         <div class="logo">
             <img src="/zara.png" alt="Logo Zara">
         </div>
-        <h2>Adicionar Key Features Personalizadas</h2>
-        <button class="button primary" onclick="customKeyFeatures()">Adicionar Key Feature</button>
+        <h2>Adicionar Key Feature Personalizada</h2>
+        <button class="button" onclick="customKeyFeatures()">Adicionar Key Feature</button>
         
         <div class="copyright">
             &copy; 2024 Lucas Januário. Todos os direitos reservados.
@@ -84,7 +75,7 @@
     <script>
         function customKeyFeatures() {
             Swal.fire({
-                title: 'Adicionar Key Features Personalizadas',
+                title: 'Adicionar Key Feature Personalizada',
                 input: 'text',
                 inputLabel: 'Digite sua Key Feature',
                 showCancelButton: true,
