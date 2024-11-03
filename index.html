@@ -100,9 +100,10 @@
         <button class="button primary" onclick="processData()">Processar Dados</button>
         <button class="button primary" onclick="showDownloadOptions()">Download</button>
         <button class="button secondary" onclick="showKeyFeatures()">Key Features</button>
+        <button class="button secondary" onclick="customKeyFeatures()">Adicionar Key Features Personalizadas</button>
         
         <div class="copyright">
-            &copy; 2024 Encoder Zara. Todos os direitos reservados.
+            &copy; 2025 Lucas Januário. Todos os direitos reservados.
         </div>
     </div>
 
@@ -204,6 +205,26 @@
 
         function showKeyFeatures() {
             Swal.fire("Key Features", "Aqui estão as principais características do Encoder Zara.", "info");
+        }
+
+        function customKeyFeatures() {
+            Swal.fire({
+                title: 'Adicionar Key Features Personalizadas',
+                input: 'text',
+                inputLabel: 'Digite sua Key Feature',
+                showCancelButton: true,
+                confirmButtonText: 'Adicionar',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Você precisa inserir uma Key Feature!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(`Key Feature Adicionada: ${result.value}`, '', 'success');
+                    // Aqui você pode adicionar a lógica para armazenar ou exibir a Key Feature adicionada
+                }
+            });
         }
     </script>
 </body>
