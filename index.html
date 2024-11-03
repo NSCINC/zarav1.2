@@ -46,15 +46,27 @@
             font-size: 1em;
             margin-top: 10px;
             transition: background-color 0.3s;
+        }
+        .button.primary {
             background-color: #1DB954; /* Cor do botão verde */
         }
-        .button:hover {
+        .button.primary:hover {
             background-color: #1ed760;
+        }
+        .button.secondary {
+            background-color: #FF5722; /* Cor do botão laranja */
+        }
+        .button.secondary:hover {
+            background-color: #e64a19;
         }
         .copyright {
             margin-top: 20px;
             color: #00ffae;
             font-size: 0.8rem;
+        }
+        input[type="file"] {
+            margin-top: 15px;
+            color: #00ffae;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -67,12 +79,45 @@
         <h2>Adicionar Key Feature Personalizada</h2>
         <button class="button" onclick="customKeyFeatures()">Adicionar Key Feature</button>
         
+        <h2>Upload de Arquivo</h2>
+        <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
+        
+        <button class="button secondary" onclick="showDownloadOptions()">Download</button>
+
         <div class="copyright">
             &copy; 2024 Lucas Januário. Todos os direitos reservados.
         </div>
     </div>
 
     <script>
+        function loadFile() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    if (file.name.endsWith(".sql")) {
+                        // Aqui você pode adicionar lógica para processar arquivos .sql
+                        Swal.fire("Sucesso", "Arquivo SQL carregado com sucesso!", "success");
+                    } else if (file.name.endsWith(".xlsx")) {
+                        // Aqui você pode adicionar lógica para processar arquivos .xlsx
+                        Swal.fire("Sucesso", "Arquivo Excel carregado com sucesso!", "success");
+                    } else {
+                        Swal.fire("Erro", "Formato de arquivo não suportado. Use .sql ou .xlsx.", "error");
+                    }
+                };
+
+                if (file.name.endsWith(".sql")) {
+                    reader.readAsText(file);
+                } else if (file.name.endsWith(".xlsx")) {
+                    reader.readAsArrayBuffer(file);
+                } else {
+                    Swal.fire("Erro", "Formato de arquivo não suportado. Use .sql ou .xlsx.", "error");
+                }
+            }
+        }
+
         function customKeyFeatures() {
             Swal.fire({
                 title: 'Adicionar Key Feature Personalizada',
@@ -91,6 +136,32 @@
                     // Aqui você pode adicionar a lógica para armazenar ou exibir a Key Feature adicionada
                 }
             });
+        }
+
+        function showDownloadOptions() {
+            // Exibir opções de download
+            Swal.fire({
+                title: 'Selecione o formato de download',
+                showCancelButton: true,
+                confirmButtonText: 'Download em .txt',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    downloadFile("Conteúdo do arquivo processado", "dados_processados.txt");
+                }
+            });
+        }
+
+        function downloadFile(data, filename) {
+            const blob = new Blob([data], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
