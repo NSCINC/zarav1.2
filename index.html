@@ -5,95 +5,70 @@
     <link rel="icon" href="logo.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encoder Zara - Fire Data Engine</title>
-   <style>
-    /* Estilo base */<style>
-    /* Estilo base */
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #1a1a1a, #333333);
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    .container {
-        width: 100%;
-        max-width: 600px;
-        padding: 30px;
-        background: #2e2e2e;
-        border-radius: 10px;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-        text-align: center;
-    }
-    .logo img {
-        max-width: 150px;
-        height: auto;
-        margin-bottom: 20px;
-    }
-    h1 {
-        color: #00ffae;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
-    label {
-        color: #00ffae;
-        display: block;
-        text-align: left;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-    textarea, input[type="file"] {
-        width: 100%;
-        background-color: #1a1a1a;
-        color: #ffffff;
-        border: 1px solid #00ffae;
-        padding: 10px;
-        margin: 10px 0;
-        font-family: monospace;
-        border-radius: 4px;
-        resize: vertical;
-    }
-    h2 {
-        color: #00ffae;
-        font-size: 1.2rem;
-        margin: 20px 0 10px;
-    }
-    .button {
-        width: 100%;
-        padding: 12px;
-        color: #00ffae; /* Texto verde */
-        border: 2px solid #00ffae; /* Borda verde */
-        background-color: white; /* Fundo branco */
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1em;
-        margin-top: 10px;
-        transition: background-color 0.3s, color 0.3s;
-        font-weight: bold;
-    }
-    .button:hover {
-        background-color: #00ffae; /* Fundo verde ao passar o mouse */
-        color: white; /* Texto branco ao passar o mouse */
-    }
-    .button.key-feature {
-        background-color: #4CAF50; /* Fundo verde para Key Features */
-        color: white; /* Texto branco */
-        border: none; /* Sem borda para Key Features */
-    }
-    .button.key-feature:hover {
-        background-color: #45a049; /* Tom mais escuro de verde ao passar o mouse */
-    }
-    .footer {
-        margin-top: 20px;
-        color: #00ffae;
-        font-size: 0.8rem;
-    }
-</style>
-
-</style>
-
+    <style>
+        /* Estilo base */
+        body {
+            font-family: Arial, sans-serif;
+            background: #121212; /* Fundo escuro */
+            color: #ffffff; /* Texto branco */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background: #1e1e1e; /* Fundo mais suave */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .logo img {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        textarea, input[type="file"] {
+            width: 100%;
+            background-color: #282828; /* Fundo do campo */
+            color: #ffffff; /* Texto branco */
+            border: 1px solid #4CAF50; /* Borda verde */
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            resize: vertical;
+            font-family: monospace;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            color: white;
+            background-color: #4CAF50; /* Fundo verde */
+            border: none; /* Sem borda */
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049; /* Tom mais escuro ao passar o mouse */
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -111,9 +86,9 @@
         <h2>Upload</h2>
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
         
-        <button class="button primary" onclick="processData()">Processar</button>
-        <button class="button primary" onclick="showDownloadOptions()">Download</button>
-        <button class="button key-feature" onclick="customKeyFeatures()">Adicionar Key Features</button>
+        <button class="button" onclick="processData()">Processar</button>
+        <button class="button" onclick="showDownloadOptions()">Download</button>
+        <button class="button" onclick="customKeyFeatures()">Adicionar Key Features</button>
         
         <div class="footer">
             &copy; 2024 Lucas Januário. Todos os direitos reservados.
