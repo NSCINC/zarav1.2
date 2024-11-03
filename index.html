@@ -38,16 +38,6 @@
             display: block;
             text-align: left;
         }
-        textarea, input[type="file"] {
-            width: 100%;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border: 1px solid #00ffae;
-            padding: 10px;
-            margin: 10px 0;
-            font-family: monospace;
-            border-radius: 4px;
-        }
         h2 {
             color: #00ffae;
             font-size: 1.2rem;
@@ -70,37 +60,21 @@
         .button.primary:hover {
             background-color: #1ed760;
         }
-        .button.secondary {
-            background-color: #FF5722; /* Botão laranja */
-        }
-        .button.secondary:hover {
-            background-color: #e64a19;
-        }
         .copyright {
             margin-top: 20px;
             color: #00ffae;
             font-size: 0.8rem;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="logo">
             <img src="/zara.png" alt="Logo Zara">
         </div>
-        <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="5" placeholder="Insira dados e parâmetros aqui..."></textarea>
-        
-        <h2>Upload de Arquivo</h2>
-        <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
-        
-        <button class="button primary" onclick="processData()">Processar Dados</button>
-        <button class="button primary" onclick="showDownloadOptions()">Download</button>
-        <button class="button secondary" onclick="showKeyFeatures()">Key Features</button>
-        <button class="button secondary" onclick="customKeyFeatures()">Adicionar Key Features Personalizadas</button>
+        <h2>Adicionar Key Features Personalizadas</h2>
+        <button class="button primary" onclick="customKeyFeatures()">Adicionar Key Feature</button>
         
         <div class="copyright">
             &copy; 2024 Lucas Januário. Todos os direitos reservados.
@@ -108,89 +82,6 @@
     </div>
 
     <script>
-        function loadFile() {
-            const fileInput = document.getElementById("fileInput");
-            const file = fileInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    if (file.name.endsWith(".sql")) {
-                        document.getElementById("combinedInput").value += `\nConsulta SQL:\n${e.target.result}`;
-                    } else if (file.name.endsWith(".xlsx")) {
-                        try {
-                            const data = new Uint8Array(e.target.result);
-                            const workbook = XLSX.read(data, {type: "array"});
-                            const sheetName = workbook.SheetNames[0];
-                            const sheet = workbook.Sheets[sheetName];
-                            const json = XLSX.utils.sheet_to_json(sheet, {header: 1});
-                            document.getElementById("combinedInput").value += `\nDados da Planilha:\n${JSON.stringify(json, null, 2)}`;
-                        } catch (error) {
-                            Swal.fire("Erro", "Falha ao processar o arquivo Excel: " + error.message, "error");
-                        }
-                    }
-                };
-
-                if (file.name.endsWith(".sql")) {
-                    reader.readAsText(file);
-                } else if (file.name.endsWith(".xlsx")) {
-                    reader.readAsArrayBuffer(file);
-                } else {
-                    Swal.fire("Erro", "Formato de arquivo não suportado. Use .sql ou .xlsx.", "error");
-                }
-            }
-        }
-
-        function processData() {
-            const combinedInput = document.getElementById("combinedInput").value;
-            if (!combinedInput.trim()) {
-                Swal.fire("Erro", "Por favor, insira dados ou faça o upload de um arquivo!", "error");
-                return;
-            }
-
-            let structuredData = combinedInput;
-            const pythonData = transcribeToPython(structuredData);
-            const sqlData = transcribeToSQL(structuredData);
-
-            window.pythonData = pythonData;
-            window.sqlData = sqlData;
-            window.excelData = structuredData;
-
-            Swal.fire("Sucesso", "Dados processados com sucesso!", "success");
-        }
-
-        function transcribeToPython(data) {
-            return `# Dados processados para Python\nprocessed_data = """\n${data}\n"""\n# Fim do processamento\n`;
-        }
-
-        function transcribeToSQL(data) {
-            return `-- Dados processados para SQL\n${data}\n-- Fim do processamento\n`;
-        }
-
-        function showDownloadOptions() {
-            if (!window.pythonData || !window.sqlData || !window.excelData) {
-                Swal.fire("Erro", "Por favor, processe os dados primeiro!", "error");
-                return;
-            }
-
-            Swal.fire({
-                title: 'Selecione o formato de download',
-                showCancelButton: true,
-                showDenyButton: true,
-                confirmButtonText: 'Python',
-                denyButtonText: 'SQL',
-                cancelButtonText: 'Planilha',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    downloadFile(window.pythonData, 'dados_processados.py');
-                } else if (result.isDenied) {
-                    downloadFile(window.sqlData, 'dados_processados.sql');
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    downloadFile(window.excelData, 'dados_processados.txt');
-                }
-            });
-        }
-
         function customKeyFeatures() {
             Swal.fire({
                 title: 'Adicionar Key Features Personalizadas',
