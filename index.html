@@ -34,7 +34,7 @@
             padding-bottom: 10px;
             margin-bottom: 10px;
         }
-        textarea, input[type="file"] {
+        textarea, input[type="file"], input[type="text"] {
             width: 100%;
             background-color: #1a1a1a;
             color: #ffffff;
@@ -44,7 +44,7 @@
             transition: border-color 0.3s;
             font-family: monospace;
         }
-        textarea:focus, input[type="file"]:focus {
+        textarea:focus, input[type="file"]:focus, input[type="text"]:focus {
             border-color: #1DB954;
             outline: none;
         }
@@ -160,7 +160,8 @@
                 { name: 'Filtrar Duplicatas', action: 'filtrar_duplicatas' },
                 { name: 'Transformação de Dados em Swift', action: 'transformar_swift' },
                 { name: 'Validação de Dados', action: 'validar_dados' },
-                { name: 'Exportar Dados Processados', action: 'exportar_dados' }
+                { name: 'Exportar Dados Processados', action: 'exportar_dados' },
+                { name: 'Feature Personalizada', action: 'personalizada' } // Nova feature personalizada
             ];
 
             const featureList = features.map(feature => `
@@ -170,25 +171,33 @@
                 </li>
             `).join('');
 
+            const customFeatureInput = `
+                <div>
+                    <label for="customFeature">Digite sua feature personalizada:</label>
+                    <input type="text" id="customFeature" placeholder="Ex: remover palavras específicas">
+                </div>
+            `;
+
             Swal.fire({
                 title: 'Selecione as Key Features para Análise de Dados SQL',
-                html: `<ul>${featureList}</ul>`,
+                html: `<ul>${featureList}</ul>${customFeatureInput}`,
                 showCancelButton: true,
                 confirmButtonText: 'Aplicar',
                 preConfirm: () => {
                     const selectedFeatures = features.filter(feature => {
                         return document.getElementById(feature.action).checked;
                     });
-                    if (selectedFeatures.length > 0) {
-                        processSelectedFeatures(selectedFeatures);
+                    const customFeature = document.getElementById('customFeature').value.trim();
+                    if (selectedFeatures.length > 0 || customFeature) {
+                        processSelectedFeatures(selectedFeatures, customFeature);
                     } else {
-                        Swal.showValidationMessage('Selecione pelo menos uma feature.');
+                        Swal.showValidationMessage('Selecione pelo menos uma feature ou insira uma feature personalizada.');
                     }
                 }
             });
         }
 
-        function processSelectedFeatures(selectedFeatures) {
+        function processSelectedFeatures(selectedFeatures, customFeature) {
             const combinedInput = document.getElementById("combinedInput").value;
             let structuredData = combinedInput;
 
@@ -215,8 +224,24 @@
                 }
             });
 
+            // Processar feature personalizada se fornecida
+            if (customFeature) {
+                structuredData = processCustomFeature(structuredData, customFeature);
+            }
+
             document.getElementById("combinedInput").value = structuredData;
             Swal.fire('Processamento Concluído', 'As features selecionadas foram aplicadas.', 'success');
+        }
+
+        function processCustomFeature(data, customFeature) {
+            // Lógica para processar a feature personalizada
+            // Exemplo: remover palavras específicas
+            const wordsToRemove = customFeature.split(',').map(word => word.trim());
+            wordsToRemove.forEach(word => {
+                const regex = new RegExp(word, 'gi');
+                data = data.replace(regex, '');
+            });
+            return data;
         }
     </script>
 </body>
