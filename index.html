@@ -32,11 +32,10 @@
             margin-bottom: 20px;
         }
         label {
-            font-size: 1rem;
             color: #00ffae;
-            margin-bottom: 5px;
             display: block;
             text-align: left;
+            margin-bottom: 5px;
         }
         textarea, input[type="file"] {
             width: 100%;
@@ -51,7 +50,7 @@
         h2 {
             color: #00ffae;
             font-size: 1.2rem;
-            margin: 20px 0 10px;
+            margin: 20px 0;
         }
         .button {
             width: 100%;
@@ -65,13 +64,13 @@
             transition: background-color 0.3s;
         }
         .button.primary {
-            background-color: #1DB954; /* Botão verde */
+            background-color: #1DB954;
         }
         .button.primary:hover {
             background-color: #1ed760;
         }
         .button.secondary {
-            background-color: #FF5722; /* Botão laranja */
+            background-color: #FF5722;
         }
         .button.secondary:hover {
             background-color: #e64a19;
@@ -92,14 +91,14 @@
             <img src="/zara.png" alt="Logo Zara">
         </div>
         <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="5" placeholder="Insira dados e parâmetros aqui..."></textarea>
+        <textarea id="combinedInput" rows="5" placeholder="Insira dados..."></textarea>
         
-        <h2>Upload de Arquivo</h2>
+        <h2>Upload</h2>
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
         
-        <button class="button primary" onclick="processData()">Processar Dados</button>
+        <button class="button primary" onclick="processData()">Processar</button>
         <button class="button primary" onclick="showDownloadOptions()">Download</button>
-        <button class="button secondary" onclick="customKeyFeatures()">Adicionar Key Features Personalizadas</button>
+        <button class="button secondary" onclick="customKeyFeatures()">Adicionar Key Features</button>
         
         <div class="copyright">
             &copy; 2025 Lucas Januário. Todos os direitos reservados.
@@ -125,7 +124,7 @@
                             const json = XLSX.utils.sheet_to_json(sheet, {header: 1});
                             document.getElementById("combinedInput").value += `\nDados da Planilha:\n${JSON.stringify(json, null, 2)}`;
                         } catch (error) {
-                            Swal.fire("Erro", "Falha ao processar o arquivo Excel: " + error.message, "error");
+                            Swal.fire("Erro", "Falha ao processar o arquivo: " + error.message, "error");
                         }
                     }
                 };
@@ -143,7 +142,7 @@
         function processData() {
             const combinedInput = document.getElementById("combinedInput").value;
             if (!combinedInput.trim()) {
-                Swal.fire("Erro", "Por favor, insira dados ou faça o upload de um arquivo!", "error");
+                Swal.fire("Erro", "Por favor, insira dados!", "error");
                 return;
             }
 
@@ -155,27 +154,26 @@
             window.sqlData = sqlData;
             window.excelData = structuredData;
 
-            Swal.fire("Sucesso", "Dados processados com sucesso!", "success");
+            Swal.fire("Sucesso", "Dados processados!", "success");
         }
 
         function transcribeToPython(data) {
-            return `# Dados processados para Python\nprocessed_data = """\n${data}\n"""\n# Fim do processamento\n`;
+            return `# Dados para Python\nprocessed_data = """\n${data}\n"""\n`;
         }
 
         function transcribeToSQL(data) {
-            return `-- Dados processados para SQL\n${data}\n-- Fim do processamento\n`;
+            return `-- Dados para SQL\n${data}\n`;
         }
 
         function showDownloadOptions() {
             if (!window.pythonData || !window.sqlData || !window.excelData) {
-                Swal.fire("Erro", "Por favor, processe os dados primeiro!", "error");
+                Swal.fire("Erro", "Processe os dados primeiro!", "error");
                 return;
             }
 
             Swal.fire({
                 title: 'Selecione o formato de download',
                 showCancelButton: true,
-                showDenyButton: true,
                 confirmButtonText: 'Python',
                 denyButtonText: 'SQL',
                 cancelButtonText: 'Planilha',
@@ -204,20 +202,18 @@
 
         function customKeyFeatures() {
             Swal.fire({
-                title: 'Adicionar Key Features Personalizadas',
+                title: 'Adicionar Key Features',
                 input: 'text',
-                inputLabel: 'Digite sua Key Feature',
                 showCancelButton: true,
                 confirmButtonText: 'Adicionar',
                 inputValidator: (value) => {
                     if (!value) {
-                        return 'Você precisa inserir uma Key Feature!';
+                        return 'Insira uma Key Feature!';
                     }
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire(`Key Feature Adicionada: ${result.value}`, '', 'success');
-                    // Aqui você pode adicionar a lógica para armazenar ou exibir a Key Feature adicionada
                 }
             });
         }
