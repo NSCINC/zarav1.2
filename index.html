@@ -16,7 +16,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
         .container {
             width: 100%;
@@ -116,9 +116,15 @@
 
         function processData() {
             const combinedInput = document.getElementById("combinedInput").value;
+            if (!combinedInput.trim()) {
+                Swal.fire("Erro", "Por favor, insira dados ou faça o upload de um arquivo!", "error");
+                return;
+            }
+
+            // Processamento dos dados
             let structuredData = combinedInput;
 
-            // Processamento de dados - pode ser expandido para incluir lógicas adicionais
+            // Transcrição para Python e SQL
             const pythonData = transcribeToPython(structuredData);
             const sqlData = transcribeToSQL(structuredData);
 
@@ -126,6 +132,8 @@
             window.pythonData = pythonData;
             window.sqlData = sqlData;
             window.excelData = structuredData;
+
+            Swal.fire("Sucesso", "Dados processados com sucesso!", "success");
         }
 
         function transcribeToPython(data) {
@@ -137,6 +145,11 @@
         }
 
         function showDownloadOptions() {
+            if (!window.pythonData || !window.sqlData || !window.excelData) {
+                Swal.fire("Erro", "Por favor, processe os dados primeiro!", "error");
+                return;
+            }
+
             Swal.fire({
                 title: 'Selecione o formato de download',
                 showCancelButton: true,
@@ -146,17 +159,17 @@
                 cancelButtonText: 'Planilha',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    downloadFile(window.pythonData, 'dados_processados.py', 'text/plain');
+                    downloadFile(window.pythonData, 'dados_processados.py');
                 } else if (result.isDenied) {
-                    downloadFile(window.sqlData, 'dados_processados.sql', 'text/plain');
+                    downloadFile(window.sqlData, 'dados_processados.sql');
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    downloadFile(window.excelData, 'dados_processados.txt', 'text/plain');
+                    downloadFile(window.excelData, 'dados_processados.txt');
                 }
             });
         }
 
-        function downloadFile(data, filename, type) {
-            const blob = new Blob([data], { type });
+        function downloadFile(data, filename) {
+            const blob = new Blob([data], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
