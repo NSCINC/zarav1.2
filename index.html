@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">   <link rel="icon" href="logo.ico">
+    <meta charset="UTF-8">
+    <link rel="icon" href="logo.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encoder Zara - Fire Data Engine</title>
     <style>
@@ -18,16 +19,20 @@
         }
         .container {
             width: 90%;
-            max-width: 800px;
+            max-width: 600px; /* Diminuindo a largura máxima */
             padding: 20px;
             background: #1e1e1e; /* Tom mais escuro para o container */
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column; /* Flex column for vertical alignment */
+            gap: 15px; /* Espaçamento entre os elementos */
         }
         h2 {
             color: #00ffae;
             border-bottom: 2px solid #00ffae;
             padding-bottom: 10px;
+            margin-bottom: 10px; /* Melhorar espaçamento abaixo do título */
         }
         textarea, input[type="file"] {
             width: 100%;
@@ -35,7 +40,7 @@
             color: #ffffff;
             border: 1px solid #00ffae;
             padding: 10px;
-            margin: 10px 0;
+            margin: 0; /* Remover margens desnecessárias */
             font-family: monospace;
             border-radius: 5px;
             transition: border-color 0.3s;
@@ -45,14 +50,13 @@
             outline: none;
         }
         .button {
-            padding: 10px 20px;
+            padding: 10px;
             background-color: #1DB954;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            margin-top: 10px;
             transition: background-color 0.3s;
         }
         .button:hover {
@@ -61,11 +65,11 @@
         .output {
             background-color: #1a1a1a;
             color: #ffffff;
-            padding: 15px;
+            padding: 10px;
             border-radius: 5px;
-            margin-top: 15px;
             white-space: pre-wrap;
             border: 1px solid #00ffae;
+            min-height: 50px; /* Altura mínima para a área de saída */
         }
         .logo {
             display: flex;
@@ -73,7 +77,7 @@
             margin-bottom: 20px;
         }
         .logo img {
-            max-width: 200px;
+            max-width: 150px; /* Ajuste no tamanho da imagem do logo */
             height: auto;
         }
     </style>
@@ -86,7 +90,7 @@
             <img src="/zara.png" alt="Logo Zara">
         </div>
         <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="5" placeholder="Insira os dados brutos, parâmetros e consulta SQL."></textarea>
+        <textarea id="combinedInput" rows="3" placeholder="Insira os dados brutos, parâmetros e consulta SQL."></textarea>
         <h2>Upload de Arquivo SQL</h2>
         <input type="file" id="sqlFile" accept=".sql" onchange="loadSQLFile()">
         <button class="button" onclick="processData()">Processar Dados</button>
@@ -109,9 +113,10 @@
             }
         }
 
-        function processData() {
+        async function processData() {
             const combinedInput = document.getElementById("combinedInput").value;
             let structuredData = combinedInput;
+
             // Limpar nulos
             if (combinedInput.includes("remover_nulos")) {
                 structuredData = structuredData.replace(/\bnull\b/g, '');
