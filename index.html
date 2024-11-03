@@ -69,13 +69,6 @@
         .button:hover {
             background-color: #1ed760;
         }
-        .button.secondary {
-            background-color: #00ffae;
-            margin-top: 5px;
-        }
-        .button.secondary:hover {
-            background-color: #00e3a3;
-        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -93,9 +86,7 @@
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
         
         <button class="button" onclick="processData()">Processar Dados</button>
-        <button class="button secondary" id="downloadButtonPython" style="display:none;">Download em Python</button>
-        <button class="button secondary" id="downloadButtonSQL" style="display:none;">Download em SQL</button>
-        <button class="button secondary" onclick="showKeyFeatures()">Key Features</button>
+        <button class="button" onclick="showDownloadOptions()">Download</button>
     </div>
 
     <script>
@@ -123,7 +114,7 @@
             }
         }
 
-        async function processData() {
+        function processData() {
             const combinedInput = document.getElementById("combinedInput").value;
             let structuredData = combinedInput;
 
@@ -134,15 +125,10 @@
             const pythonData = transcribeToPython(structuredData);
             const sqlData = transcribeToSQL(structuredData);
 
-            // Mostrar botões de download
-            document.getElementById("downloadButtonPython").style.display = 'block';
-            document.getElementById("downloadButtonSQL").style.display = 'block';
-            document.getElementById("downloadButtonPython").onclick = function() {
-                downloadFile(pythonData, 'dados_processados.py');
-            };
-            document.getElementById("downloadButtonSQL").onclick = function() {
-                downloadFile(sqlData, 'dados_processados.sql');
-            };
+            // Salvar dados processados para download
+            window.pythonData = pythonData;
+            window.sqlData = sqlData;
+            window.excelData = structuredData;
         }
 
         function transcribeToPython(data) {
@@ -151,6 +137,25 @@
 
         function transcribeToSQL(data) {
             return `-- Dados processados para SQL\n${data}\n-- Fim do processamento\n`;
+        }
+
+        function showDownloadOptions() {
+            Swal.fire({
+                title: 'Selecione o formato de download',
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonText: 'Python',
+                denyButtonText: 'SQL',
+                cancelButtonText: 'Planilha',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    downloadFile(window.pythonData, 'dados_processados.py');
+                } else if (result.isDenied) {
+                    downloadFile(window.sqlData, 'dados_processados.sql');
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    downloadFile(window.excelData, 'dados_processados.xlsx');
+                }
+            });
         }
 
         function downloadFile(data, filename) {
@@ -163,10 +168,6 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        }
-
-        function showKeyFeatures() {
-            // Função showKeyFeatures permanece a mesma
         }
     </script>
 </body>
