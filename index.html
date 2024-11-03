@@ -90,13 +90,13 @@
             <img src="/zara.png" alt="Logo Zara">
         </div>
         <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="3" placeholder="Insira os dados brutos, parâmetros e consulta SQL."></textarea>
+        <textarea id="combinedInput" rows="3"></textarea>
         <h2>Upload de Arquivo SQL</h2>
         <input type="file" id="sqlFile" accept=".sql" onchange="loadSQLFile()">
         <button class="button" onclick="processData()">Processar Dados</button>
         <h2>Dados Estruturados para LLM:</h2>
         <div class="output" id="structuredData">Os dados estruturados aparecerão aqui...</div>
-        <button class="button" onclick="transcribeToSwift()">Transcrever para Swift</button>
+        <button class="button" id="downloadButton" style="display:none;">Download dos Dados Processados</button>
         <h2>Dados Transcritos para Swift:</h2>
         <div class="output" id="swiftData">O código Swift aparecerá aqui...</div>
     </div>
@@ -133,6 +133,12 @@
             // Filtragem usando uma rede neural
             const filteredData = await neuralFilter(structuredData);
             document.getElementById("structuredData").textContent = filteredData;
+
+            // Mostrar o botão de download
+            document.getElementById("downloadButton").style.display = 'block';
+            document.getElementById("downloadButton").onclick = function() {
+                downloadFile(filteredData, 'dados_processados.txt');
+            };
         }
 
         // Exemplo de função de filtragem usando TensorFlow.js
@@ -148,6 +154,18 @@
 
             // Retornar dados filtrados
             return `Dados filtrados: ${outputTensor.dataSync()}`;
+        }
+
+        function downloadFile(data, filename) {
+            const blob = new Blob([data], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function transcribeToSwift() {
