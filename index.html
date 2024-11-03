@@ -23,7 +23,7 @@
             padding: 30px;
             background: #2e2e2e;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
             text-align: center;
         }
         .logo img {
@@ -31,11 +31,17 @@
             height: auto;
             margin-bottom: 20px;
         }
+        h1 {
+            color: #00ffae;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
         label {
             color: #00ffae;
             display: block;
             text-align: left;
             margin-bottom: 5px;
+            font-weight: bold;
         }
         textarea, input[type="file"] {
             width: 100%;
@@ -46,11 +52,12 @@
             margin: 10px 0;
             font-family: monospace;
             border-radius: 4px;
+            resize: vertical;
         }
         h2 {
             color: #00ffae;
             font-size: 1.2rem;
-            margin: 20px 0;
+            margin: 20px 0 10px;
         }
         .button {
             width: 100%;
@@ -62,6 +69,7 @@
             font-size: 1em;
             margin-top: 10px;
             transition: background-color 0.3s;
+            font-weight: bold;
         }
         .button.primary {
             background-color: #1DB954;
@@ -75,7 +83,7 @@
         .button.secondary:hover {
             background-color: #e64a19;
         }
-        .copyright {
+        .footer {
             margin-top: 20px;
             color: #00ffae;
             font-size: 0.8rem;
@@ -90,6 +98,7 @@
         <div class="logo">
             <img src="/zara.png" alt="Logo Zara">
         </div>
+        <h1>Encoder Zara</h1>
         <label for="combinedInput">Dados e Parâmetros:</label>
         <textarea id="combinedInput" rows="5" placeholder="Insira dados..."></textarea>
         
@@ -100,8 +109,8 @@
         <button class="button primary" onclick="showDownloadOptions()">Download</button>
         <button class="button secondary" onclick="customKeyFeatures()">Adicionar Key Features</button>
         
-        <div class="copyright">
-            &copy; 2025 Lucas Januário. Todos os direitos reservados.
+        <div class="footer">
+            &copy; 2024 Lucas Januário. Todos os direitos reservados.
         </div>
     </div>
 
