@@ -101,14 +101,14 @@
                         document.getElementById("combinedInput").value += `\nConsulta SQL:\n${e.target.result}`;
                     } else if (file.name.endsWith(".xlsx")) {
                         try {
-                            const data = new Uint8Array(e.target.result);
+                            const data = e.target.result; // Usar o ArrayBuffer diretamente
                             const workbook = XLSX.read(data, {type: "array"});
                             const sheetName = workbook.SheetNames[0];
                             const sheet = workbook.Sheets[sheetName];
                             const json = XLSX.utils.sheet_to_json(sheet, {header: 1});
                             document.getElementById("combinedInput").value += `\nDados da Planilha:\n${JSON.stringify(json, null, 2)}`;
                         } catch (error) {
-                            Swal.fire("Erro", "Falha ao processar o arquivo Excel.", "error");
+                            Swal.fire("Erro", "Falha ao processar o arquivo Excel: " + error.message, "error");
                         }
                     }
                 };
@@ -187,3 +187,4 @@
     </script>
 </body>
 </html>
+<script async data-explicit-opt-in="true" data-cookie-opt-in="true" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
