@@ -95,21 +95,30 @@
             const file = fileInput.files[0];
             if (file) {
                 const reader = new FileReader();
-                if (file.name.endsWith(".sql")) {
-                    reader.onload = function(e) {
+
+                reader.onload = function(e) {
+                    if (file.name.endsWith(".sql")) {
                         document.getElementById("combinedInput").value += `\nConsulta SQL:\n${e.target.result}`;
-                    };
+                    } else if (file.name.endsWith(".xlsx")) {
+                        try {
+                            const data = new Uint8Array(e.target.result);
+                            const workbook = XLSX.read(data, {type: "array"});
+                            const sheetName = workbook.SheetNames[0];
+                            const sheet = workbook.Sheets[sheetName];
+                            const json = XLSX.utils.sheet_to_json(sheet, {header: 1});
+                            document.getElementById("combinedInput").value += `\nDados da Planilha:\n${JSON.stringify(json, null, 2)}`;
+                        } catch (error) {
+                            Swal.fire("Erro", "Falha ao processar o arquivo Excel.", "error");
+                        }
+                    }
+                };
+
+                if (file.name.endsWith(".sql")) {
                     reader.readAsText(file);
                 } else if (file.name.endsWith(".xlsx")) {
-                    reader.onload = function(e) {
-                        const data = new Uint8Array(e.target.result);
-                        const workbook = XLSX.read(data, {type: "array"});
-                        const sheetName = workbook.SheetNames[0];
-                        const sheet = workbook.Sheets[sheetName];
-                        const json = XLSX.utils.sheet_to_json(sheet, {header: 1});
-                        document.getElementById("combinedInput").value += `\nDados da Planilha:\n${JSON.stringify(json, null, 2)}`;
-                    };
                     reader.readAsArrayBuffer(file);
+                } else {
+                    Swal.fire("Erro", "Formato de arquivo não suportado. Use .sql ou .xlsx.", "error");
                 }
             }
         }
@@ -121,14 +130,10 @@
                 return;
             }
 
-            // Processamento dos dados
             let structuredData = combinedInput;
-
-            // Transcrição para Python e SQL
             const pythonData = transcribeToPython(structuredData);
             const sqlData = transcribeToSQL(structuredData);
 
-            // Salvar dados processados para download
             window.pythonData = pythonData;
             window.sqlData = sqlData;
             window.excelData = structuredData;
