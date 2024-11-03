@@ -20,54 +20,62 @@
         .container {
             width: 90%;
             max-width: 400px;
-            padding: 20px;
+            padding: 15px;
             background: #1e1e1e; /* Fundo mais suave */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
         .logo img {
-            max-width: 120px;
+            max-width: 100px; /* Tamanho reduzido da logo */
             height: auto;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         h1 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.3rem; /* Tamanho reduzido do título */
+            margin-bottom: 10px;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+            font-size: 0.9rem; /* Tamanho reduzido do texto do label */
         }
         textarea, input[type="file"] {
             width: 100%;
             background-color: #282828; /* Fundo do campo */
             color: #ffffff; /* Texto branco */
             border: 1px solid #4CAF50; /* Borda verde */
-            padding: 10px;
-            margin: 10px 0;
+            padding: 8px; /* Padding reduzido */
+            margin: 8px 0; /* Margem reduzida */
             border-radius: 4px;
             resize: vertical;
             font-family: monospace;
+            font-size: 0.9rem; /* Tamanho reduzido da fonte */
         }
         .button {
             width: 100%;
-            padding: 12px;
+            padding: 10px; /* Padding reduzido */
             color: white;
             background-color: #4CAF50; /* Fundo verde */
             border: none; /* Sem borda */
             border-radius: 4px;
             cursor: pointer;
-            font-size: 1em;
-            margin-top: 10px;
+            font-size: 0.9rem; /* Tamanho reduzido da fonte */
+            margin-top: 8px; /* Margem reduzida */
             transition: background-color 0.3s;
         }
         .button:hover {
             background-color: #45a049; /* Tom mais escuro ao passar o mouse */
         }
+        .key-feature-button {
+            background-color: #4CAF50; /* Fundo verde */
+        }
+        .key-feature-button:hover {
+            background-color: #45a049; /* Tom mais escuro ao passar o mouse */
+        }
         .footer {
-            margin-top: 20px;
-            font-size: 0.8rem;
+            margin-top: 15px;
+            font-size: 0.7rem; /* Tamanho reduzido do rodapé */
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
@@ -81,14 +89,14 @@
         </div>
         <h1>Encoder Zara</h1>
         <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="5" placeholder="Insira dados..."></textarea>
+        <textarea id="combinedInput" rows="4" placeholder="Insira dados..."></textarea>
         
         <h2>Upload</h2>
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
         
         <button class="button" onclick="processData()">Processar</button>
         <button class="button" onclick="showDownloadOptions()">Download</button>
-        <button class="button" onclick="customKeyFeatures()">Adicionar Key Features</button>
+        <button class="button key-feature-button" onclick="customKeyFeatures()">Adicionar Key Features</button>
         
         <div class="footer">
             &copy; 2024 Lucas Januário. Todos os direitos reservados.
