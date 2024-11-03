@@ -69,6 +69,12 @@
         .button:hover {
             background-color: #1ed760;
         }
+        .features-link {
+            margin-top: 20px;
+            color: #00ffae;
+            text-decoration: none;
+            display: inline-block;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -87,6 +93,8 @@
         
         <button class="button" onclick="processData()">Processar Dados</button>
         <button class="button" onclick="showDownloadOptions()">Download</button>
+        
+        <a class="features-link" href="features.html">Ver Principais Recursos</a>
     </div>
 
     <script>
@@ -101,7 +109,7 @@
                         document.getElementById("combinedInput").value += `\nConsulta SQL:\n${e.target.result}`;
                     } else if (file.name.endsWith(".xlsx")) {
                         try {
-                            const data = e.target.result; // Usar o ArrayBuffer diretamente
+                            const data = new Uint8Array(e.target.result);
                             const workbook = XLSX.read(data, {type: "array"});
                             const sheetName = workbook.SheetNames[0];
                             const sheet = workbook.Sheets[sheetName];
@@ -187,4 +195,3 @@
     </script>
 </body>
 </html>
-<script async data-explicit-opt-in="true" data-cookie-opt-in="true" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
