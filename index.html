@@ -27,41 +27,41 @@
             text-align: center;
         }
         .logo img {
-            max-width: 100px; /* Tamanho reduzido da logo */
+            max-width: 80px; /* Tamanho reduzido da logo */
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         h1 {
-            font-size: 1.3rem; /* Tamanho reduzido do título */
-            margin-bottom: 10px;
+            font-size: 1.2rem; /* Tamanho reduzido do título */
+            margin-bottom: 5px;
         }
         label {
             display: block;
-            margin-bottom: 3px;
-            font-size: 0.9rem; /* Tamanho reduzido do texto do label */
+            margin-bottom: 2px;
+            font-size: 0.8rem; /* Tamanho reduzido do texto do label */
         }
         textarea, input[type="file"] {
             width: 100%;
             background-color: #282828; /* Fundo do campo */
             color: #ffffff; /* Texto branco */
             border: 1px solid #4CAF50; /* Borda verde */
-            padding: 8px; /* Padding reduzido */
-            margin: 8px 0; /* Margem reduzida */
+            padding: 6px; /* Padding reduzido */
+            margin: 6px 0; /* Margem reduzida */
             border-radius: 4px;
             resize: vertical;
             font-family: monospace;
-            font-size: 0.9rem; /* Tamanho reduzido da fonte */
+            font-size: 0.8rem; /* Tamanho reduzido da fonte */
         }
         .button {
             width: 100%;
-            padding: 10px; /* Padding reduzido */
+            padding: 8px; /* Padding reduzido */
             color: white;
             background-color: #4CAF50; /* Fundo verde */
             border: none; /* Sem borda */
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9rem; /* Tamanho reduzido da fonte */
-            margin-top: 8px; /* Margem reduzida */
+            font-size: 0.8rem; /* Tamanho reduzido da fonte */
+            margin-top: 6px; /* Margem reduzida */
             transition: background-color 0.3s;
         }
         .button:hover {
@@ -69,12 +69,13 @@
         }
         .key-feature-button {
             background-color: #4CAF50; /* Fundo verde */
+            color: white; /* Texto branco */
         }
         .key-feature-button:hover {
             background-color: #45a049; /* Tom mais escuro ao passar o mouse */
         }
         .footer {
-            margin-top: 15px;
+            margin-top: 10px;
             font-size: 0.7rem; /* Tamanho reduzido do rodapé */
         }
     </style>
@@ -89,7 +90,7 @@
         </div>
         <h1>Encoder Zara</h1>
         <label for="combinedInput">Dados e Parâmetros:</label>
-        <textarea id="combinedInput" rows="4" placeholder="Insira dados..."></textarea>
+        <textarea id="combinedInput" rows="3" placeholder="Insira dados..."></textarea>
         
         <h2>Upload</h2>
         <input type="file" id="fileInput" accept=".sql, .xlsx" onchange="loadFile()">
