@@ -94,8 +94,6 @@
         <h2>Upload de Arquivo SQL</h2>
         <input type="file" id="sqlFile" accept=".sql" onchange="loadSQLFile()">
         <button class="button" onclick="processData()">Processar Dados</button>
-        <h2>Dados Estruturados para LLM:</h2>
-        <div class="output" id="structuredData">Os dados estruturados aparecerão aqui...</div>
         <button class="button" id="downloadButton" style="display:none;">Download dos Dados Processados</button>
         <h2>Dados Transcritos para Swift:</h2>
         <div class="output" id="swiftData">O código Swift aparecerá aqui...</div>
@@ -130,30 +128,21 @@
                 structuredData = Array.from(new Set(structuredData.split('\n'))).join('\n');
             }
 
-            // Filtragem usando uma rede neural
-            const filteredData = await neuralFilter(structuredData);
-            document.getElementById("structuredData").textContent = filteredData;
+            // Mostrar dados transcritos para Swift
+            const swiftData = transcribeToSwift(structuredData);
+            document.getElementById("swiftData").textContent = swiftData;
 
             // Mostrar o botão de download
             document.getElementById("downloadButton").style.display = 'block';
             document.getElementById("downloadButton").onclick = function() {
-                downloadFile(filteredData, 'dados_processados.txt');
+                downloadFile(swiftData, 'dados_processados.swift');
             };
         }
 
-        // Exemplo de função de filtragem usando TensorFlow.js
-        async function neuralFilter(data) {
-            // Simular um modelo de rede neural simples
-            const model = await tf.sequential();
-            model.add(tf.layers.dense({units: 1, inputShape: [1]}));
-            model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
-
-            // Processar dados para a entrada do modelo (simulação)
-            const inputTensor = tf.tensor2d([data.split('\n').length], [1, 1]);
-            const outputTensor = model.predict(inputTensor);
-
-            // Retornar dados filtrados
-            return `Dados filtrados: ${outputTensor.dataSync()}`;
+        function transcribeToSwift(data) {
+            let swiftData = `let processedData = """\n${data}\n"""\n`;
+            swiftData += `// Processamento concluído para uso em Swift\n`;
+            return swiftData;
         }
 
         function downloadFile(data, filename) {
@@ -166,13 +155,6 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        }
-
-        function transcribeToSwift() {
-            const structuredData = document.getElementById("structuredData").textContent;
-            let swiftData = `let processedData = """\n${structuredData}\n"""\n`;
-            swiftData += `// Processamento concluído para uso em Swift\n`;
-            document.getElementById("swiftData").textContent = swiftData;
         }
     </script>
 </body>
