@@ -62,14 +62,12 @@
         .button:hover {
             background-color: #1ed760;
         }
-        .output {
+        .features {
             background-color: #1a1a1a;
             color: #ffffff;
             padding: 10px;
             border-radius: 5px;
-            white-space: pre-wrap;
             border: 1px solid #00ffae;
-            min-height: 50px; /* Altura mínima para a área de saída */
         }
         .logo {
             display: flex;
@@ -81,8 +79,9 @@
             height: auto;
         }
     </style>
-    <!-- Importando a biblioteca TensorFlow.js -->
+    <!-- Importando a biblioteca TensorFlow.js e SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="container">
@@ -95,8 +94,19 @@
         <input type="file" id="sqlFile" accept=".sql" onchange="loadSQLFile()">
         <button class="button" onclick="processData()">Processar Dados</button>
         <button class="button" id="downloadButton" style="display:none;">Download dos Dados Processados</button>
-        <h2>Dados Transcritos para Swift:</h2>
-        <div class="output" id="swiftData">O código Swift aparecerá aqui...</div>
+        <button class="button" onclick="showKeyFeatures()">Key Features</button>
+        
+        <h2>Key Features para Mineração de Dados:</h2>
+        <div class="features">
+            <ul>
+                <li>Remover Nulos</li>
+                <li>Normalizar Texto</li>
+                <li>Filtrar Duplicatas</li>
+                <li>Transformação de Dados em Swift</li>
+                <li>Validação de Dados</li>
+                <li>Exportar Dados Processados</li>
+            </ul>
+        </div>
     </div>
     <script>
         function loadSQLFile() {
@@ -128,9 +138,8 @@
                 structuredData = Array.from(new Set(structuredData.split('\n'))).join('\n');
             }
 
-            // Mostrar dados transcritos para Swift
+            // Transcrever dados para Swift
             const swiftData = transcribeToSwift(structuredData);
-            document.getElementById("swiftData").textContent = swiftData;
 
             // Mostrar o botão de download
             document.getElementById("downloadButton").style.display = 'block';
@@ -155,6 +164,24 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        function showKeyFeatures() {
+            Swal.fire({
+                title: 'Key Features para Análise de Dados SQL',
+                html: `
+                    <ul>
+                        <li>Remover Nulos</li>
+                        <li>Normalizar Texto</li>
+                        <li>Filtrar Duplicatas</li>
+                        <li>Transformação de Dados em Swift</li>
+                        <li>Validação de Dados</li>
+                        <li>Exportar Dados Processados</li>
+                    </ul>
+                `,
+                icon: 'info',
+                confirmButtonText: 'Fechar'
+            });
         }
     </script>
 </body>
